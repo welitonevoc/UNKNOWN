@@ -14,7 +14,9 @@ abstract class _BookSelectorStoreBase with Store {
   @observable
   bool isLoading = false;
 
-  _BookSelectorStoreBase(this.bibleStore);
+  _BookSelectorStoreBase(this.bibleStore){
+    new Future.delayed(new Duration(seconds: 1)).then((value) => changeBookChapter(0, 0));
+  }
 
   @action
   changeBookChapter(int book, int chapter) {

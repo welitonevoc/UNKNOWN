@@ -13,6 +13,9 @@ abstract class _BookViewStoreBase with Store {
 
   _BookViewStoreBase(this.bibleStore);
 
+  @computed
+  get getFontSize => fontSize;
+
   @action
   changeFont() {
     if (fontSize == 14) {

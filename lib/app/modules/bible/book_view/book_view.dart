@@ -43,45 +43,40 @@ class _BookViewPageState extends ModularState<BookViewPage, BookViewStore> {
           ChapterModel chapters = controller.bibleStore.currentBook!
               .chapters![controller.bibleStore.currentChapter!];
 
-          var colorSelect = Paint()
-            ..color = Color(0xFFA49C7B).withOpacity(0.48);
-          return PageView.builder(
-              allowImplicitScrolling: false,
-              pageSnapping: true,
-              itemCount: controller.bibleStore.currentBook!.chapters!.length,
-              controller: PageController(
-                  viewportFraction: 1,
-                  initialPage: controller.bibleStore.currentChapter!),
-              onPageChanged: controller.changePage,
-              itemBuilder: (_, i) {
-                return ListView.builder(
-                  itemBuilder: (ctx, i) {
-                    return ListTile(
-                      title: Text(
-                        "${i + 1} ${chapters.versicles![i].versicle}",
-                        maxLines: 5,
-                        style: GoogleFonts.rufina(
-                            fontStyle: FontStyle.normal,
-                            textStyle: TextStyle(
-                                decorationColor:
-                                    Color(0xFFA49C7B).withOpacity(0.48),
-                                background: (chapters.versicles![i].isSelected)
-                                    ? colorSelect
-                                    : null,
-                                color: chapters.versicles![i].isSelected
-                                    ? Color(0xFF414D37)
-                                    : Color(0xFF738369),
-                                fontSize: controller.fontSize)),
-                      ),
-                      onTap: () {
-                        chapters.versicles![i].selectVersicle();
-                        setState(() {});
-                      },
-                    );
-                  },
-                  itemCount: chapters.versicles?.length,
-                );
-              });
+          return ListView.builder(
+            itemBuilder: (ctx, i) {
+              return Observer(
+                builder: (ctx) {
+                  Paint colorSelect = Paint()
+                    ..color = Color(0xFFA49C7B).withOpacity(0.48);
+
+                  return ListTile(
+                    title: Text(
+                      "${i + 1} ${chapters.versicles![i].versicle}",
+                      maxLines: 5,
+                      style: GoogleFonts.rufina(
+                          fontStyle: FontStyle.normal,
+                          textStyle: TextStyle(
+                              decorationColor:
+                                  Color(0xFFA49C7B).withOpacity(0.48),
+                              background: (chapters.versicles![i].isSelected)
+                                  ? colorSelect
+                                  : null,
+                              color: chapters.versicles![i].isSelected
+                                  ? Color(0xFF414D37)
+                                  : Color(0xFF738369),
+                              fontSize: controller.getFontSize)),
+                    ),
+                    onTap: () {
+                      chapters.versicles![i].selectVersicle();
+                      setState(() {});
+                    },
+                  );
+                },
+              );
+            },
+            itemCount: chapters.versicles?.length,
+          );
         }
         return Container();
       }),

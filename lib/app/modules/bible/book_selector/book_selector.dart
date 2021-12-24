@@ -154,7 +154,7 @@ class _BookSelectorWidgetState
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Text(
-                        "Versoes",
+                        "Versões",
                         style: GoogleFonts.rufina(
                           fontStyle: FontStyle.normal,
                           fontSize: 16,
