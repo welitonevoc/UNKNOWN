@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:mobx/mobx.dart';
-
 import 'chapter_model.dart';
 
 class BookModel {
