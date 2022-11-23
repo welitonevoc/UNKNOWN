@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppWidget extends StatefulWidget {
@@ -35,16 +34,12 @@ class _AppWidgetState extends State<AppWidget> {
       dividerColor: Colors.white54,
     );
 
-    return Shortcuts(
-        shortcuts: <LogicalKeySet, Intent>{
-          LogicalKeySet(LogicalKeyboardKey.select): ActivateIntent(),
-              
-        },
-        child: MaterialApp(
-          title: 'MyBible',
-          initialRoute: '/splash',
-          debugShowCheckedModeBanner: false,
-          theme: defaultTheme,
-        ).modular());
+    return MaterialApp.router(
+      title: 'MyBible',
+      debugShowCheckedModeBanner: false,
+      theme: defaultTheme,
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
+    );
   }
 }

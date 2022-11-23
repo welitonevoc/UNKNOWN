@@ -8,6 +8,7 @@ import 'app/app_widget.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
+  Modular.setInitialRoute('/splash');
 
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
