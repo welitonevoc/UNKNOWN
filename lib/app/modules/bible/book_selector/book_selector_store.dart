@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:mybible/app/core/models/book_model/book_model.dart';
 import 'package:mybible/app/modules/bible/bible_store.dart';
 
 import '../bible_version_enum.dart';
@@ -14,8 +13,9 @@ abstract class _BookSelectorStoreBase with Store {
   @observable
   bool isLoading = false;
 
-  _BookSelectorStoreBase(this.bibleStore){
-    new Future.delayed(new Duration(seconds: 1)).then((value) => changeBookChapter(0, 0));
+  _BookSelectorStoreBase(this.bibleStore) {
+    new Future.delayed(new Duration(seconds: 1))
+        .then((value) => changeBookChapter(0, 0));
   }
 
   @action
