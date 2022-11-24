@@ -9,7 +9,7 @@ abstract class _BookViewStoreBase with Store {
   final BibleStore bibleStore;
 
   @observable
-  double fontSize = 14.0;
+  double fontSize = 16.0;
 
   _BookViewStoreBase(this.bibleStore);
 
@@ -18,12 +18,12 @@ abstract class _BookViewStoreBase with Store {
 
   @action
   changeFont() {
-    if (fontSize == 14) {
-      fontSize = 16;
-    } else if (fontSize == 16) {
+    if (fontSize == 16) {
       fontSize = 18;
+    } else if (fontSize == 18) {
+      fontSize = 20;
     } else {
-      fontSize = 14;
+      fontSize = 16;
     }
 
     print(fontSize);

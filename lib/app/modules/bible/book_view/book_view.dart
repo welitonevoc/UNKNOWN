@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mybible/app/core/models/book_model/chapter_model.dart';
+import 'package:mybible/app/core/widgets/loading.dart';
 import 'package:mybible/app/modules/bible/book_selector/book_selector.dart';
 import 'package:mybible/app/modules/bible/book_view/book_view_store.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +37,7 @@ class _BookViewPageState extends State<BookViewPage> {
       body: Observer(builder: (_) {
         if (controller.bibleStore.isLoading) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Loading(),
           );
         }
 

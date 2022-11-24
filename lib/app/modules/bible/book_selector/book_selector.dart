@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybible/app/core/models/book_model/book_model.dart';
 import 'package:mybible/app/core/widgets/buttons.dart';
+import 'package:mybible/app/core/widgets/loading.dart';
 import 'package:mybible/app/modules/bible/book_selector/book_selector_store.dart';
 
 import '../bible_version_enum.dart';
@@ -15,8 +16,9 @@ class BookSelectorWidget extends StatefulWidget {
   _BookSelectorWidgetState createState() => _BookSelectorWidgetState();
 }
 
-class _BookSelectorWidgetState
-    extends ModularState<BookSelectorWidget, BookSelectorStore> {
+class _BookSelectorWidgetState extends State<BookSelectorWidget> {
+  final BookSelectorStore store = Modular.get<BookSelectorStore>();
+
   _showModalBooks() {
     return showModalBottomSheet(
       backgroundColor: Color(0xFFFFFBEF),
@@ -27,9 +29,9 @@ class _BookSelectorWidgetState
         return FractionallySizedBox(
           heightFactor: 0.85,
           child: Observer(builder: (_) {
-            if (controller.isLoading)
+            if (store.isLoading)
               return Center(
-                child: CircularProgressIndicator(),
+                child: Loading(),
               );
 
             return Column(
@@ -59,7 +61,7 @@ class _BookSelectorWidgetState
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (ctx, index) {
-                      BookModel book = controller.bibleStore.version[index];
+                      BookModel book = store.bibleStore.version[index];
 
                       return ExpansionTile(
                         title: Text(
@@ -68,9 +70,10 @@ class _BookSelectorWidgetState
                             fontStyle: FontStyle.normal,
                           ),
                         ),
-                        initiallyExpanded: (controller.bibleStore
-                                                        .indexCurrentBook ==
-                                                    index) ? true : false,
+                        initiallyExpanded:
+                            (store.bibleStore.indexCurrentBook == index)
+                                ? true
+                                : false,
                         tilePadding: EdgeInsets.symmetric(horizontal: 16.0),
                         children: <Widget>[
                           GridView.count(
@@ -88,16 +91,16 @@ class _BookSelectorWidgetState
                                   margin: EdgeInsets.all(8.0),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      controller.changeBookChapter(index, x);
+                                      store.changeBookChapter(index, x);
                                       Navigator.of(context).pop();
                                     },
                                     style: ElevatedButton.styleFrom(
                                         textStyle:
                                             const TextStyle(fontSize: 20),
-                                        primary: (controller.bibleStore
+                                        primary: (store.bibleStore
                                                         .indexCurrentBook ==
                                                     index &&
-                                                controller.bibleStore
+                                                store.bibleStore
                                                         .currentChapter ==
                                                     x)
                                             ? Color(0xFF414D37)
@@ -116,7 +119,7 @@ class _BookSelectorWidgetState
                         ],
                       );
                     },
-                    itemCount: controller.bibleStore.version.length,
+                    itemCount: store.bibleStore.version.length,
                   ),
                 ),
               ],
@@ -137,9 +140,9 @@ class _BookSelectorWidgetState
         return FractionallySizedBox(
           // heightFactor: 0.85,
           child: Observer(builder: (_) {
-            if (controller.isLoading)
+            if (store.isLoading)
               return Center(
-                child: CircularProgressIndicator(),
+                child: Loading(),
               );
 
             return Column(
@@ -170,16 +173,18 @@ class _BookSelectorWidgetState
                     child: ListView.builder(
                   itemBuilder: (_, i) {
                     return ListTile(
-                      trailing: controller.bibleStore.versionBible == BibleVersion.values[i] ? Icon(Icons.check) : null,
+                      trailing: store.bibleStore.versionBible ==
+                              BibleVersion.values[i]
+                          ? Icon(Icons.check)
+                          : null,
                       title: Text(
-                        "${controller.bibleStore.getBibleVersions(i)}",
+                        "${store.bibleStore.getBibleVersions(i)}",
                         style: GoogleFonts.rufina(
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      
                       onTap: () {
-                        controller.changeVersion(BibleVersion.values[i]);
+                        store.changeVersion(BibleVersion.values[i]);
                         Navigator.of(context).pop();
                         setState(() {});
                       },
@@ -205,12 +210,12 @@ class _BookSelectorWidgetState
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buttonRounded("${controller.bibleStore.getCurrentBook}",
+            buttonRounded("${store.bibleStore.getCurrentBook}",
                 isRoudedLeft: true, callback: _showModalBooks),
             SizedBox(
               width: 2,
             ),
-            buttonRounded(("${controller.bibleStore.getCurrentVersion}"),
+            buttonRounded(("${store.bibleStore.getCurrentVersion}"),
                 isRoudedRight: true, callback: _showModalVersions),
           ],
         ),
