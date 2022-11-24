@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybible/app/core/models/book_model/book_model.dart';
 import 'package:mybible/app/core/widgets/buttons.dart';
+import 'package:mybible/app/core/widgets/loading.dart';
 import 'package:mybible/app/modules/bible/book_selector/book_selector_store.dart';
 
 import '../bible_version_enum.dart';
@@ -30,7 +31,7 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
           child: Observer(builder: (_) {
             if (store.isLoading)
               return Center(
-                child: CircularProgressIndicator(),
+                child: Loading(),
               );
 
             return Column(
@@ -141,7 +142,7 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
           child: Observer(builder: (_) {
             if (store.isLoading)
               return Center(
-                child: CircularProgressIndicator(),
+                child: Loading(),
               );
 
             return Column(
